@@ -1,0 +1,14 @@
+<main>
+    <div>
+        <header>
+            <nav>
+                <a routerLink="/" routerLinkActive="ativo" [routerLinkActiveOptions]="{ exact: true }">Cadastrar</a>
+                <a routerLink="/contatos" routerLinkActive="ativo" [routerLinkActiveOptions]="{ exact: true }">Lista de contatos</a>        
+            </nav>
+        </header>
+
+        <section>
+            <ng-content></ng-content>
+        </section>
+    </div>
+</main>

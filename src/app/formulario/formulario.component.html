@@ -1,0 +1,17 @@
+<viewComponent>
+    <form>
+        <div>
+            <h1>Formulário</h1>
+            <p>Cadastre os contatos</p>
+        </div>
+
+        <div>
+            <input type="text" name="" id="" placeholder="Nome" [(ngModel)]="contatoAdd.nome" [ngModelOptions]="{standalone: true}">
+            <input type="number" name="" id="" placeholder="Telefone" [(ngModel)]="contatoAdd.telefone" [ngModelOptions]="{standalone: true}">
+            <input type="email" name="" id="" placeholder="E-mail" [(ngModel)]="contatoAdd.email" [ngModelOptions]="{standalone: true}">
+            <input type="text" name="" id="" placeholder="Profissão" [(ngModel)]="contatoAdd.profissao" [ngModelOptions]="{standalone: true}">
+        </div>
+
+        <button (click)="cadastrar()">Cadastrar</button>
+    </form>
+</viewComponent>
