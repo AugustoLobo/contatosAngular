@@ -17,16 +17,17 @@ export class FormularioComponent {
 
   cadastrar() {
     if (!this.contatoAdd.nome.trim()) {
-      alert('Campo obrigatório: "Nome" em branco, não foi possível cadastrar o aluno.')
-      return
+      alert('Campo obrigatório: "Nome" em branco.');
+      return;
     }
     if (!this.contatoAdd.email.trim() && !this.contatoAdd.telefone) {
-      alert('Campo obrigatório: "Telefone" ou "E-mail" em branco, não foi possível cadastrar o aluno.')
-      return
+      alert('Preencha Telefone ou Email.');
+      return;
     }
-
-    this.contatoService.addContato(this.contatoAdd);
-
-    this.contatoAdd = { id: null, nome: '', telefone: null, email: '', profissao: '' };
+  
+    this.contatoService.addContato(this.contatoAdd).subscribe(() => {
+      this.contatoAdd = { id: null, nome: '', telefone: null, email: '', profissao: '' };
+    });
   }
+  
 }

@@ -1,35 +1,30 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Contatos } from '../models/contatos'; 
+import { Contatos } from '../models/contatos';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContatosServicesService {
-  contatos : Contatos[] = [];
-  private contador: number = 1;
 
-  addContato(contato: Contatos) {
-    if (contato.id === null) {
-      contato.id = this.contador++;
-    }
-    this.contatos.push(contato);
+  private apiUrl = 'http://localhost:8080/api/contatos';
+
+  constructor(private http: HttpClient) { }
+
+  getContatos(): Observable<Contatos[]> {
+    return this.http.get<Contatos[]>(this.apiUrl);
   }
 
-  getContatos(){
-    return this.contatos;
+  addContato(contato: Contatos): Observable<Contatos> {
+    return this.http.post<Contatos>(this.apiUrl, contato);
   }
 
-  editContato(contato: Contatos) {
-    if (contato.id !== null) {
-      const index = this.contatos.findIndex(c => c.id === contato.id);
-      this.contatos[index] = contato; 
-    } else {
-      alert('Contato não encontrado para edição');
-    }
+  editContato(contato: Contatos): Observable<Contatos> {
+    return this.http.put<Contatos>(`${this.apiUrl}/${contato.id}`, contato);
   }
 
-  excluirContato(id: number) {
-    this.contatos = this.contatos.filter(contato => contato.id !== id);
+  excluirContato(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
-  constructor() { }
 }

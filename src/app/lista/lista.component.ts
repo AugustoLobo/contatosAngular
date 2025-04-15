@@ -15,37 +15,29 @@ export class ListaComponent {
   contatoEdit: Contatos = { id: null, nome: '', telefone: null, email: '', profissao: '' }
   contatos: Contatos[] = []
   statusEdit = 0
+  cancelar: any;
 
   constructor(private contatoService: ContatosServicesService) { }
 
   ngOnInit() {
-    this.contatos = this.contatoService.getContatos()
+    this.contatoService.getContatos().subscribe(data => {
+      this.contatos = data;
+    });
   }
-
-  editarContato(id: number | null) {
-    if (id != null) {
-      this.statusEdit = id;
-      const contato = this.contatos.find(c => c.id === id);
-      if (contato) {
-        this.contatoEdit = { ...contato };
-      }
-    }
-  }
-
+  
   excluirContato(id: number | null) {
     if (id != null) {
-      this.contatoService.excluirContato(id);
-      this.contatos = this.contatoService.getContatos()
+      this.contatoService.excluirContato(id).subscribe(() => {
+        this.contatoService.getContatos().subscribe(data => this.contatos = data);
+      });
     }
   }
-
-  cancelar() {
-    this.contatoEdit = { id: null, nome: '', telefone: null, email: '', profissao: '' };
-    this.statusEdit = 0;
-  }
-
+  
   editar() {
-    this.contatoService.editContato(this.contatoEdit)
-    this.cancelar()
+    this.contatoService.editContato(this.contatoEdit).subscribe(() => {
+      this.cancelar();
+      this.contatoService.getContatos().subscribe(data => this.contatos = data);
+    });
   }
+  
 }
